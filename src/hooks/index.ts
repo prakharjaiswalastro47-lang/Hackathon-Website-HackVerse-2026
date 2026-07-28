@@ -39,6 +39,13 @@ export function useIntersectionObserver() {
   const ref = useRef<HTMLElement>(null);
 
   useEffect(() => {
+    if (typeof IntersectionObserver === 'undefined') {
+      // Fallback if IntersectionObserver is not supported
+      document.querySelectorAll('.animate-on-scroll, .animate-on-scroll-left, .animate-on-scroll-right')
+        .forEach((el) => el.classList.add('visible'));
+      return;
+    }
+
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -55,10 +62,15 @@ export function useIntersectionObserver() {
           }
         });
       },
-      { threshold: 0.1 }
+      { threshold: 0.05 }
     );
 
     if (ref.current) observer.observe(ref.current);
+    
+    // Also trigger elements inside body immediately
+    document.querySelectorAll('.animate-on-scroll, .animate-on-scroll-left, .animate-on-scroll-right')
+      .forEach((el) => el.classList.add('visible'));
+
     return () => observer.disconnect();
   }, []);
 
@@ -67,21 +79,30 @@ export function useIntersectionObserver() {
 
 export function useDarkMode() {
   const [isDark, setIsDark] = useState<boolean>(() => {
-    const stored = localStorage.getItem('theme');
-    if (stored) return stored === 'dark';
-    return window.matchMedia('(prefers-color-scheme: dark)').matches;
+    try {
+      const stored = localStorage.getItem('theme');
+      if (stored) return stored === 'dark';
+      return window.matchMedia ? window.matchMedia('(prefers-color-scheme: dark)').matches : true;
+    } catch (e) {
+      return true;
+    }
   });
 
   useEffect(() => {
-    const root = document.documentElement;
-    if (isDark) {
-      root.classList.add('dark');
-      localStorage.setItem('theme', 'dark');
-    } else {
-      root.classList.remove('dark');
-      localStorage.setItem('theme', 'light');
+    try {
+      const root = document.documentElement;
+      if (isDark) {
+        root.classList.add('dark');
+        localStorage.setItem('theme', 'dark');
+      } else {
+        root.classList.remove('dark');
+        localStorage.setItem('theme', 'light');
+      }
+    } catch (e) {
+      // Safe fallback if localStorage is blocked
     }
   }, [isDark]);
 
   return { isDark, toggle: () => setIsDark((prev) => !prev) };
 }
+
