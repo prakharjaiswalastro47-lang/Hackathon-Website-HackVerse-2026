@@ -33,7 +33,7 @@ export function Hero() {
 
         <h1
           className="font-display font-bold text-5xl sm:text-7xl lg:text-8xl text-gray-900 dark:text-white mb-6 animate-fade-up"
-          style={{ animationDelay: '0.1s', opacity: 0 }}
+          style={{ animationDelay: '0.1s' }}
         >
           <span className="block">Welcome to</span>
           <span className="gradient-text">HackVerse 2026</span>
@@ -41,7 +41,7 @@ export function Hero() {
 
         <p
           className="text-lg sm:text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto mb-10 animate-fade-up"
-          style={{ animationDelay: '0.2s', opacity: 0 }}
+          style={{ animationDelay: '0.2s' }}
         >
           48 hours. Infinite possibilities. Join the world's most innovative hackathon
           where ideas become reality.
@@ -50,7 +50,7 @@ export function Hero() {
         {/* Stats row */}
         <div
           className="flex flex-wrap items-center justify-center gap-6 mb-12 animate-fade-up"
-          style={{ animationDelay: '0.3s', opacity: 0 }}
+          style={{ animationDelay: '0.3s' }}
         >
           {[
             { value: '48h', label: 'Duration' },
@@ -72,7 +72,7 @@ export function Hero() {
         {/* Countdown */}
         <div
           className="grid grid-cols-4 gap-3 sm:gap-4 max-w-2xl mx-auto mb-10 animate-fade-up"
-          style={{ animationDelay: '0.4s', opacity: 0 }}
+          style={{ animationDelay: '0.4s' }}
         >
           {countdownItems.map((item) => (
             <div
@@ -92,7 +92,7 @@ export function Hero() {
         {/* CTAs */}
         <div
           className="flex flex-col sm:flex-row items-center justify-center gap-4 animate-fade-up"
-          style={{ animationDelay: '0.5s', opacity: 0 }}
+          style={{ animationDelay: '0.5s' }}
         >
           <button
             onClick={() => document.getElementById('register')?.scrollIntoView({ behavior: 'smooth' })}
